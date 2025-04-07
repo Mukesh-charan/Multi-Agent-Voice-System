@@ -88,25 +88,23 @@ This flow is triggered via Vapi’s webhook after the call ends. It records the 
 
 Same starting flow → Answered Call Node → FALSE
 
-    Didn’t Answer the Call → TRUE
+1. **Didn’t Answer the Call → TRUE**
+   - Search for the record using **Get ID #2**.
 
-    Search record with Get ID #2
+2. **Check First Call Node**:
+   - **First Attempt**:
+     - Update the attempt status in **Attempt #2 Node**.
+     - Wait for 1 minute using the **1 Minute Wait Node**.
+     - Trigger the second call using **Call #2 Node**.
+     - Log the second attempt in the **Attempt #2 Node**.
 
-    Check First Call Node:
+   - **Second Attempt**:
+     - Update the final call status in **Airtable2 Node**.
 
-        First Attempt:
+- The workflow is triggered when a call is not answered and proceeds to check if it’s the first attempt.
+- If it is the first attempt, the workflow logs the data and waits before initiating a second call.
+- Final status updates are logged in Airtable after both attempts.
 
-            Update attempt in Attempt #2 Node
-
-            Wait in 1 Minute Node
-
-            Trigger second call (Call #2 Node)
-
-            Log in Attempt #2 Node
-
-        Second Attempt:
-
-            Update final status in Airtable2 Node
 
 ---
 
